@@ -8,7 +8,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_flashcard_prompt(text, subject=None):
     subject_line = f"The subject is {subject}." if subject else ""
-    return f"""
+    prompt = f"""
 {subject_line}
 From the following educational content, generate at least 15 concise flashcards in this format:
 
@@ -20,6 +20,7 @@ Text:
 {text}
 """
 """
+    return prompt
 
 def get_flashcards(text, subject=None):
     prompt = generate_flashcard_prompt(text, subject)
