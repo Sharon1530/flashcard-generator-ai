@@ -1,7 +1,8 @@
-# utils.py (downgraded for openai==0.28 compatibility)
+# utils.py
 import openai
 import os
 from dotenv import load_dotenv
+from openai.error import RateLimitError
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -20,12 +21,32 @@ def generate_flashcard_prompt(text, subject=None):
 
 def get_flashcards(text, subject=None):
     prompt = generate_flashcard_prompt(text, subject)
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.7
-    )
-    return response['choices'][0]['message']['content']
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7
+        )
+        return response['choices'][0]['message']['content']
+    except RateLimitError:
+        # Fallback mock response for demo/testing if quota exceeded
+        return """
+Q: What is photosynthesis?
+A: Photosynthesis is the process by which green plants use sunlight to synthesize food from carbon dioxide and water.
+
+Q: Where does photosynthesis occur?
+A: Photosynthesis occurs in the chloroplasts of plant cells.
+
+Q: What pigment is responsible for absorbing sunlight in plants?
+A: Chlorophyll is the pigment that absorbs sunlight.
+
+Q: What are the main reactants of photosynthesis?
+A: The main reactants are carbon dioxide and water.
+
+Q: What are the products of photosynthesis?
+A: The products are glucose and oxygen.
+(Note: Displaying mock flashcards because OpenAI quota was exceeded.)
+"""
 
 def parse_flashcards(raw_text):
     lines = raw_text.strip().split("\n")
