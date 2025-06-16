@@ -11,11 +11,19 @@ def generate_flashcard_prompt(text, subject=None):
     subject_line = f"The subject is {subject}." if subject else ""
     prompt = (
         f"{subject_line}\n"
-        "From the following educational content, generate at least 15 concise flashcards in this format:\n\n"
-        "Q: <question>\n"
-        "A: <answer>\n\n"
+        "Based on the following content, generate at least 15 flashcards grouped by topic.\n"
+        "Each flashcard should include:\n"
+        "- A topic heading\n"
+        "- A difficulty tag (Easy, Medium, Hard)\n"
+        "- Q: <question>\n"
+        "- A: <answer>\n\n"
+        "Use the following format:\n"
+        "### Topic Title\n"
+        "[Difficulty]\n"
+        "Q: ...\n"
+        "A: ...\n\n"
         "Text:\n"
-        f"""\n{text}\n"""
+        f"\"\"\"\n{text}\n\"\"\""
     )
     return prompt
 
@@ -29,22 +37,25 @@ def get_flashcards(text, subject=None):
         )
         return response['choices'][0]['message']['content']
     except RateLimitError:
-        # Fallback mock response for demo/testing if quota exceeded
+        # Fallback mock content
         return """
+### Photosynthesis
+[Easy]
 Q: What is photosynthesis?
-A: Photosynthesis is the process by which green plants use sunlight to synthesize food from carbon dioxide and water.
+A: It is the process by which green plants use sunlight to synthesize food from carbon dioxide and water.
 
-Q: Where does photosynthesis occur?
-A: Photosynthesis occurs in the chloroplasts of plant cells.
-
-Q: What pigment is responsible for absorbing sunlight in plants?
-A: Chlorophyll is the pigment that absorbs sunlight.
-
+[Medium]
 Q: What are the main reactants of photosynthesis?
-A: The main reactants are carbon dioxide and water.
+A: Carbon dioxide and water.
 
-Q: What are the products of photosynthesis?
-A: The products are glucose and oxygen.
+### Cell Structure
+[Medium]
+Q: What is the function of mitochondria?
+A: It is the powerhouse of the cell, generating ATP.
+
+[Hard]
+Q: What is the role of the Golgi apparatus?
+A: It modifies, sorts, and packages proteins and lipids for secretion or delivery to other organelles.
 
 (Note: Displaying mock flashcards because OpenAI quota was exceeded.)
 """
@@ -52,16 +63,28 @@ A: The products are glucose and oxygen.
 def parse_flashcards(raw_text):
     lines = raw_text.strip().split("\n")
     qas = []
+    topic = ""
+    difficulty = ""
     q, a = "", ""
+
     for line in lines:
         line = line.strip()
-        if line.startswith("Q:"):
+        if line.startswith("###"):
+            topic = line.replace("###", "").strip()
+        elif line.startswith("[") and line.endswith("]"):
+            difficulty = line.strip("[]")
+        elif line.startswith("Q:"):
             q = line[2:].strip()
         elif line.startswith("A:"):
             a = line[2:].strip()
             if q and a:
-                qas.append({"Question": q, "Answer": a})
-                q, a = "", ""
+                qas.append({
+                    "Topic": topic or "General",
+                    "Question": q,
+                    "Answer": a,
+                    "Difficulty": difficulty or "Medium"
+                })
+                q, a, difficulty = "", "", ""
         elif line.startswith("(") and line.endswith(")"):
-            qas.append({"Question": "Note", "Answer": line})
+            qas.append({"Topic": "Note", "Question": "Note", "Answer": line, "Difficulty": ""})
     return qas
