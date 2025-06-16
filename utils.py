@@ -16,19 +16,19 @@ Q: <question>
 A: <answer>
 
 Text:
-\"\"\"
+"""
 {text}
-\"\"\"
+"""
 """
 
 def get_flashcards(text, subject=None):
     prompt = generate_flashcard_prompt(text, subject)
-    response = openai.ChatCompletion.create(
+    response = openai.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7
     )
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
 
 def parse_flashcards(raw_text):
     lines = raw_text.strip().split("\n")
@@ -43,4 +43,3 @@ def parse_flashcards(raw_text):
                 qas.append({"Question": q, "Answer": a})
                 q, a = "", ""
     return qas
-
