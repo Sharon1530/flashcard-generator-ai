@@ -37,6 +37,7 @@ if st.button("Generate Flashcards"):
         for fc in flashcards:
             st.markdown(f"""**📌 Topic:** {fc['Topic']}  
             **🎯 Difficulty:** {fc['Difficulty']}
+            
             **Q:** {fc['Question']}  
             **A:** {fc['Answer']}  
             ---""")
