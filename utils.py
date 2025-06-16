@@ -45,6 +45,7 @@ A: The main reactants are carbon dioxide and water.
 
 Q: What are the products of photosynthesis?
 A: The products are glucose and oxygen.
+
 (Note: Displaying mock flashcards because OpenAI quota was exceeded.)
 """
 
@@ -53,6 +54,7 @@ def parse_flashcards(raw_text):
     qas = []
     q, a = "", ""
     for line in lines:
+        line = line.strip()
         if line.startswith("Q:"):
             q = line[2:].strip()
         elif line.startswith("A:"):
@@ -60,4 +62,6 @@ def parse_flashcards(raw_text):
             if q and a:
                 qas.append({"Question": q, "Answer": a})
                 q, a = "", ""
+        elif line.startswith("(") and line.endswith(")"):
+            qas.append({"Question": "Note", "Answer": line})
     return qas
