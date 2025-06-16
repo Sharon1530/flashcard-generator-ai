@@ -23,3 +23,10 @@ Built for the ShelfEx Summer/Fall 2025 AI/ML Internship task.
 git clone https://github.com/Sharon1530/flashcard-generator-ai.git
 cd flashcard-generator-ai
 
+---
+
+## 📄 License
+
+MIT – feel free to use and modify!
+
+
