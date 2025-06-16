@@ -35,8 +35,7 @@ if st.button("Generate Flashcards"):
         st.success(f"✅ Generated {len(flashcards)} flashcards!")
 
         for fc in flashcards:
-            st.markdown(f"**Q:** {fc['Question']}\n
-**A:** {fc['Answer']}")
+            st.markdown(f"**Q:** {fc['Question']}\n**A:** {fc['Answer']}")
 
         df = pd.DataFrame(flashcards)
 
