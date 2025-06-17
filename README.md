@@ -104,8 +104,7 @@ A: It is the powerhouse of the cell, generating ATP.
 
 ## 🎬 Demo Video
 
-> A short walkthrough is available [here](#)  
-(*Upload your Loom or QuickTime demo link here once ready*)
+> A short walkthrough is available [[here](https://drive.google.com/drive/folders/15RNaQgLJITjIWrO6RdzHhYJ1-maygPNo?usp=sharing)](#)  
 
 ---
 
