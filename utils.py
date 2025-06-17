@@ -2,7 +2,7 @@
 import openai
 import os
 from dotenv import load_dotenv
-from openai.error import RateLimitError
+from openai import OpenAIError
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -36,7 +36,7 @@ def get_flashcards(text, subject=None):
             temperature=0.7
         )
         return response['choices'][0]['message']['content']
-    except RateLimitError:
+    except OpenAIError:
         # Fallback mock content
         return """
 ### Photosynthesis
