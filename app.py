@@ -38,7 +38,7 @@ if st.button("Generate Flashcards"):
             with st.container():
                 st.markdown(
                     f"📌 Topic: {fc['Topic']}  \n"
-                    f"🎯 Difficulty: {fc['Difficulty']}  \n\n"
+                    f"🎯 Difficulty: {fc['Difficulty']}  \n"
                     f"Q: {fc['Question']}  \n"
                     f"A: {fc['Answer']}  \n"
                     "---"
