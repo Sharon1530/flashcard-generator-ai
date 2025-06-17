@@ -1,6 +1,6 @@
 # app.py (Streamlit frontend)
 import streamlit as st
-import fitz  # PyMuPDF
+import PyPDF2
 import pandas as pd
 from utils import get_flashcards, parse_flashcards
 
@@ -18,8 +18,8 @@ subject = st.text_input("Optional: What is the subject/topic?")
 if st.button("Generate Flashcards"):
     if uploaded_file:
         if uploaded_file.name.endswith(".pdf"):
-            doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
-            text = "\n".join([page.get_text() for page in doc])
+            pdf_reader = PyPDF2.PdfReader(uploaded_file)
+            text = "\n".join([page.extract_text() for page in pdf_reader.pages if page.extract_text()])
         else:
             text = uploaded_file.read().decode("utf-8")
     else:
