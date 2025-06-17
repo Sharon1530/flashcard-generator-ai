@@ -128,3 +128,5 @@ MIT — feel free to use, fork, and improve with attribution.
 ## 🙏 Acknowledgment
 
 This app was built as part of the **ShelfEx AI/ML Engineer Internship Task – Summer/Fall 2025**.
+
+
