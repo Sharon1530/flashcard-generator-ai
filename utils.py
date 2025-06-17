@@ -86,5 +86,5 @@ def parse_flashcards(raw_text):
                 })
                 q, a, difficulty = "", "", ""
         elif line.startswith("(") and line.endswith(")"):
-            qas.append({"Topic": "Note", "Question": "Note", "Answer": line, "Difficulty": ""})
+            qas.append({"Topic": "Note", "Question": "None", "Answer": line, "Difficulty": "None"})
     return qas
