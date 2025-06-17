@@ -35,16 +35,17 @@ if st.button("Generate Flashcards"):
         st.success(f"✅ Generated {len(flashcards)} flashcards!")
         
         for fc in flashcards:
-            with st.container():
-                st.markdown(
-                    f"📌 Topic: {fc['Topic']}  \n"
-                    f"🎯 Difficulty: {fc['Difficulty']}  \n"
-                    f"Q: {fc['Question']}  \n"
-                    f"A: {fc['Answer']}  \n"
-                    "---"
-                )
-
-
+            st.markdown(
+                f"""
+                <div style='font-size: 15px; line-height: 1.6; margin-bottom: 20px'>
+                <span style='color: #888'><b>Topic:</b> {fc['Topic']} | <b>Difficulty:</b> {fc['Difficulty']}</span><br><br>
+                Q: {fc['Question']}<br>
+                A: {fc['Answer']}
+                <hr>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
         df = pd.DataFrame(flashcards)
 
