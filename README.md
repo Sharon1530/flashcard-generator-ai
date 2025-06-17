@@ -113,7 +113,7 @@ A: It is the powerhouse of the cell, generating ATP.
 
 - **Language:** Python 3  
 - **Frontend/UI:** Streamlit  
-- **LLM API:** OpenAI GPT-3.5 (`openai==0.28.1`)  
+- **LLM API:** OpenAI GPT-3.5 (`openai==1.30.1`)  
 - **PDF Parsing:** PyMuPDF  
 - **Environment:** `.env` + `dotenv`
 
