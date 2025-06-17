@@ -61,6 +61,7 @@ Then open: [http://localhost:8501](http://localhost:8501)
 The app is also deployed and accessible at:  
 👉 [https://your-username.streamlit.app
 ](https://flashcard-generator-ai-mpaln8fuzbn94tkvjgnu5y.streamlit.app)
+
 To enable GPT generation:
 1. Go to **Settings > Secrets**
 2. Add:
